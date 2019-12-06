@@ -27,7 +27,7 @@ public class CreateButton : MonoBehaviour
             switch (i)
             {
                 case 0: 
-                    newButton.GetComponent<UI_choix>().Text = "Je ne sais pas quoi te dire !"; 
+                    newButton.GetComponent<UI_choix>().Text = "Je ne sais pas quoi te dire !";
                     break;
                 case 1:
                     newButton.GetComponent<UI_choix>().Text = "Non, je ne pense pas..";
