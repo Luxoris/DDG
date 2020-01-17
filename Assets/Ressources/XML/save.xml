@@ -9,30 +9,18 @@
   <dialogueJoueur id="002">
     <reponse>
       <valueChange>15</valueChange>
-      <txtReponse>
-          Oui!
-        </txtReponse>
-      <next>
-          003
-        </next>
+      <txtReponse>Oui!</txtReponse>
+      <next>003</next>
     </reponse>
     <reponse>
       <valueChange>3</valueChange>
-      <txtReponse>
-          Non!
-        </txtReponse>
-      <next>
-          004
-        </next>
+      <txtReponse>Non!</txtReponse>
+      <next>004</next>
     </reponse>
     <reponse>
       <valueChange>-66</valueChange>
-      <txtReponse>
-          Pourquoi?
-        </txtReponse>
-      <next>
-          005
-        </next>
+      <txtReponse>Pourquoi?</txtReponse>
+      <next>005</next>
     </reponse>
   </dialogueJoueur>
 </script>

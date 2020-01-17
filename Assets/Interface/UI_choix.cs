@@ -12,7 +12,7 @@ public class UI_choix : MonoBehaviour
 
     public void UpdateReponse()
     {
-        Game_Manager.GetComponent<Game.Game>().Next(numBouton);
+        Game_Manager.GetComponent<Game.Game>().NumReponseSelectionne = numBouton;
     }
 
     // Start is called before the first frame update

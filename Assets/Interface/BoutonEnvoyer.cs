@@ -5,13 +5,11 @@ using UnityEngine.UI;
 
 public class BoutonEnvoyer : MonoBehaviour
 {
-    public GameObject UI_Reponse;
-    public GameObject UI_Content;
+    public GameObject Game_Manager;
     //fonction ajout message
     public void AjoutMessage()
     {
-        UI_Content.GetComponent<AjoutMessage>().AjoutMessageEnvoye(UI_Reponse.GetComponent<Text>().text);
-        UI_Content.GetComponent<AjoutMessage>().AjoutMessageRecu("Message réponse de test)");
+        Game_Manager.GetComponent<Game.Game>().Next(Game_Manager.GetComponent<Game.Game>().NumReponseSelectionne);
     }
 
     // Start is called before the first frame update

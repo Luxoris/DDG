@@ -142,9 +142,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2dc17c24c179c9419e965e9449ee5e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UI_Reponse: {fileID: 0}
+  Game_Manager: {fileID: 0}
   Text: 
   Choix_Text: 
+  numBouton: 0
 --- !u!1 &7208999173742266341
 GameObject:
   m_ObjectHideFlags: 0
