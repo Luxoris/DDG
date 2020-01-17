@@ -6,14 +6,15 @@ public class CreateButton : MonoBehaviour
 {
     public GameObject UI_choix;
     public GameObject UI_choix_canvas;
-    public GameObject UI_Reponse;
+    public GameObject Game_Manager;
 
     void Start()
     {
-        creationBoutonChoix(3);
+        //creationBoutonChoix(3);
+        //destructionBoutonChoix();
     }
 
-    void creationBoutonChoix(int nbChoix){
+    public void creationBoutonChoix(int nbChoix){
         int i = 0;
         float width = UI_choix_canvas.GetComponent<RectTransform>().rect.width;
         Vector3 monVecteur = new Vector3(0, UI_choix_canvas.transform.position.y, 0f);
@@ -23,6 +24,8 @@ public class CreateButton : MonoBehaviour
             GameObject newButton = Instantiate(UI_choix, monVecteur, Quaternion.identity, UI_choix_canvas.transform);
             newButton.GetComponent<RectTransform>().offsetMin = new Vector2(i*(width/nbChoix), 0);
             newButton.GetComponent<RectTransform>().offsetMax = new Vector2(-(nbChoix-(i+1)) * (width / nbChoix), 0);
+            //ajout du numéro du bouton
+            newButton.GetComponent<UI_choix>().numBouton = i;
             //Ajout du text aux boutons
             switch (i)
             {
@@ -37,10 +40,19 @@ public class CreateButton : MonoBehaviour
                     break;
             }
             //ajout de la référence de la réponse aux boutons
-            newButton.GetComponent<UI_choix>().UI_Reponse = UI_Reponse;
+            newButton.GetComponent<UI_choix>().Game_Manager = Game_Manager;
 
             //newButton.transform.Find("Text").GetComponent<Text>().text = width.ToString();
 
+        }
+
+    }
+
+    public void destructionBoutonChoix()
+    {
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
         }
     }
 }
