@@ -53,7 +53,7 @@ namespace Game
             if (TmpType == "CMessage")
             {
                 TmpIsMessage = true;
-                UI_CONTENT.GetComponent<AjoutMessage>().AjoutMessageRecu(TmpMessage.Message);
+                UI_CONTENT.GetComponent<AjoutMessage>().AjoutMessageRecu(TmpMessage.Message,30f);
                 this.Next(0);
             }
             if (TmpType == "DialogueJoueur")
