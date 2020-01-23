@@ -15,8 +15,12 @@
     </dialogueEmeline>
   <dialogueEmeline id="003">
       <message>ah bon tu crois ?</message>
-      <next>002</next>
+      <next>004</next>
     </dialogueEmeline>
+  <dialogueEmeline id="004">
+    <message>j'en suis sur !</message>
+    <next>005</next>
+  </dialogueEmeline>
     <dialogueJoueur id="002">
       <reponse>
         <valueChange>15</valueChange>
@@ -34,4 +38,16 @@
         <next>003</next>
       </reponse>
     </dialogueJoueur>
+  <dialogueJoueur id="005">
+    <reponse>
+      <valueChange>15</valueChange>
+      <txtReponse>Oui!</txtReponse>
+      <next>003</next>
+    </reponse>
+    <reponse>
+      <valueChange>3</valueChange>
+      <txtReponse>Non!</txtReponse>
+      <next>003</next>
+    </reponse>
+  </dialogueJoueur>
 </script>

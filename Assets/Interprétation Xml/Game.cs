@@ -61,13 +61,13 @@ namespace Game
                 TmpIsMessage = false;
                 ajoutTextBoutonChoix();
             }
-            Debug.Log("Le message actuel est un Message ? "+TmpIsMessage);
+            //Debug.Log("Le message actuel est un Message ? "+TmpIsMessage);
 
         }
 
         public void Next(int NumBouton)
         {
-            Debug.Log("Affichage du prochain message.");
+            //Debug.Log("Affichage du prochain message.");
             //gestion d'erreur si le message pointe vers lui-même :
             if(TmpMessage.Id == TmpMessage.Next)
             {
@@ -163,10 +163,16 @@ namespace Game
             butContainer.destructionBoutonChoix();
             butContainer.creationBoutonChoix(TmpDialogueJoueur.Reponses.Count);
             int i = 0;
-            foreach(Transform child in butContainer.transform)
+            //Debug.Log("NB reponses = " + TmpDialogueJoueur.Reponses.Count);
+            if (TmpDialogueJoueur.Reponses.Count > 0)
             {
-                child.gameObject.GetComponent<UI_choix>().Text = TmpDialogueJoueur.Reponses[i].TxtReponse;
-                i++;
+                i = 0;
+                foreach (GameObject bouton in butContainer.GetComponent<CreateButton>().listeBouton)
+                {
+                    //Debug.Log("Num reponse = " + i);
+                    bouton.GetComponent<UI_choix>().Text = TmpDialogueJoueur.Reponses[i].TxtReponse;
+                    i++;
+                }
             }
             
         }

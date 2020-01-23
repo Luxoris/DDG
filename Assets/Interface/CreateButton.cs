@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class CreateButton : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class CreateButton : MonoBehaviour
     public GameObject UI_choix_canvas;
     public GameObject Game_Manager;
     public GameObject UI_ScrollViewMessage;
+    public List<GameObject> listeBouton = new List<GameObject>();
 
     void Start()
     {
@@ -31,18 +33,21 @@ public class CreateButton : MonoBehaviour
             //ajout de la référence de la réponse aux boutons
             newButton.GetComponent<UI_choix>().Game_Manager = Game_Manager;
 
+            listeBouton.Add(newButton);
             //newButton.transform.Find("Text").GetComponent<Text>().text = width.ToString();
 
         }
         UI_choix_canvas.GetComponent<RectTransform>().offsetMax = new Vector2(UI_choix_canvas.GetComponent<RectTransform>().offsetMax.x, (height * (nbChoix+0.25f)));
         UI_ScrollViewMessage.GetComponent<RectTransform>().offsetMin = new Vector2(UI_ScrollViewMessage.GetComponent<RectTransform>().offsetMin.x, (height * (nbChoix + 0.25f)));
+        
     }
 
     public void destructionBoutonChoix()
     {
-        foreach (Transform child in transform)
+        foreach (GameObject bouton in listeBouton)
         {
-            Destroy(child.gameObject);
+            Destroy(bouton);
         }
+        listeBouton.Clear();
     }
 }
