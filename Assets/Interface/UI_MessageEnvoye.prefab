@@ -122,6 +122,32 @@ PrefabInstance:
       propertyPath: m_CullTransparentMesh
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8002122858619354239, guid: 24e81d7ab03eb214080ee2c3deaebd00,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.26210395
+      objectReference: {fileID: 0}
+    - target: {fileID: 8002122858619354239, guid: 24e81d7ab03eb214080ee2c3deaebd00,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.26210395
+      objectReference: {fileID: 0}
+    - target: {fileID: 8002122858619354239, guid: 24e81d7ab03eb214080ee2c3deaebd00,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.5849056
+      objectReference: {fileID: 0}
+    - target: {fileID: 8571039845624713881, guid: 24e81d7ab03eb214080ee2c3deaebd00,
+        type: 3}
+      propertyPath: m_CullTransparentMesh
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5538371250338536301, guid: 24e81d7ab03eb214080ee2c3deaebd00,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: a0b9ca7aec2dfc14fa0d0a99c140ec51,
+        type: 3}
     - target: {fileID: 5885450916458201252, guid: 24e81d7ab03eb214080ee2c3deaebd00,
         type: 3}
       propertyPath: m_FontData.m_Alignment
@@ -167,11 +193,6 @@ PrefabInstance:
       propertyPath: m_Color.b
       value: 0.71047753
       objectReference: {fileID: 0}
-    - target: {fileID: 8571039845624713881, guid: 24e81d7ab03eb214080ee2c3deaebd00,
-        type: 3}
-      propertyPath: m_CullTransparentMesh
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3927786243853672636, guid: 24e81d7ab03eb214080ee2c3deaebd00,
         type: 3}
       propertyPath: m_Color.r
@@ -186,21 +207,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.b
       value: 0.6784314
-      objectReference: {fileID: 0}
-    - target: {fileID: 8002122858619354239, guid: 24e81d7ab03eb214080ee2c3deaebd00,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 0.26210395
-      objectReference: {fileID: 0}
-    - target: {fileID: 8002122858619354239, guid: 24e81d7ab03eb214080ee2c3deaebd00,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 0.26210395
-      objectReference: {fileID: 0}
-    - target: {fileID: 8002122858619354239, guid: 24e81d7ab03eb214080ee2c3deaebd00,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 0.5849056
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24e81d7ab03eb214080ee2c3deaebd00, type: 3}
