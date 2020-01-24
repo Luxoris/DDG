@@ -9,7 +9,6 @@ namespace Game
     {
         public List<DialogueJoueur> ListeDialogueJoueurs = new List<DialogueJoueur>();
         public List<CMessage> ListeMessage = new List<CMessage>();
-        public string[] cheminParcouru;
         public int points;
         public string xmlPath;
         public string xmlPathSave;
@@ -19,6 +18,7 @@ namespace Game
         public DialogueJoueur TmpDialogueJoueur;
         public int NumReponseSelectionne;
         private bool TmpIsMessage;
+        public Save save = new Save();
         
         public Game(){ 
         }
@@ -27,14 +27,58 @@ namespace Game
         {
             InterpretationXml xml = new InterpretationXml();
             xml = InterpretationXml.LoadXml(xmlPath);
-            xml.Save(xmlPathSave);
+            //xml.Save(xmlPathSave);
             ListeMessage = xml.Messages;
             ListeDialogueJoueurs = xml.ListeDialogueJoueurs;
         }
 
         public void ChargementSauvegarde()
         {
+            //chargement de la sauvegarde
+            save = save.LoadXml(xmlPathSave);
+            int i = 0;
+            while(i < save.actions.Count){
+                //gestion d'erreur si le message pointe vers lui-même :
+                if (TmpMessage.Id == TmpMessage.Next)
+                {
+                    Debug.LogWarning("L'id du message " + TmpMessage.Id + "pointe vers lui-même.");
+                }
 
+                //Si c'est un message envoyé, ajoute le message dans l'interface
+                if (!TmpIsMessage)
+                {
+                    UI_CONTENT.GetComponent<AjoutMessage>().AjoutMessageEnvoye(TmpDialogueJoueur.Reponses[save.actions[i]].TxtReponse);
+                    i++;
+                }
+
+                //appel le prochain message suivant si il est envoyé ou reçu
+                string Next = "";
+                if (TmpIsMessage)
+                {
+                    Next = TmpMessage.Next;
+                }
+                else
+                {
+                    Next = TmpDialogueJoueur.Reponses[save.actions[i-1]].Next;
+
+                }
+                string TmpType = GetById(Next, ref TmpMessage, ref TmpDialogueJoueur);
+                if (TmpType == "CMessage")
+                {
+                    TmpIsMessage = true;
+                    UI_CONTENT.GetComponent<AjoutMessage>().AjoutMessageRecu(TmpMessage.Message);
+                }
+                if (TmpType == "DialogueJoueur")
+                {
+                    TmpIsMessage = false;
+                }
+                if (TmpType == "")
+                {
+                    Debug.LogWarning("La référence du next " + Next + " n'existe pas !");
+                }
+            }
+            this.Next(0);
+            
         }
 
         public void Start()
@@ -54,7 +98,8 @@ namespace Game
             {
                 TmpIsMessage = true;
                 UI_CONTENT.GetComponent<AjoutMessage>().AjoutMessageRecu(TmpMessage.Message,30f);
-                this.Next(0);
+                
+                //this.Next(0);
             }
             if (TmpType == "DialogueJoueur")
             {
@@ -62,6 +107,8 @@ namespace Game
                 ajoutTextBoutonChoix();
             }
             //Debug.Log("Le message actuel est un Message ? "+TmpIsMessage);
+
+            ChargementSauvegarde();
 
         }
 
@@ -78,6 +125,7 @@ namespace Game
             if (!TmpIsMessage)
             {
                 UI_CONTENT.GetComponent<AjoutMessage>().AjoutMessageEnvoye(TmpDialogueJoueur.Reponses[NumBouton].TxtReponse);
+                save.addSaveAction(NumBouton, xmlPathSave);
             }
 
             //appel le prochain message suivant si il est envoyé ou reçu
