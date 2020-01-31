@@ -22,12 +22,13 @@ namespace Game
         private bool TmpIsMessage;
         public Save save = new Save();
         private int state;
+        private UnityWebRequest uwr;
 
         public Game(){ 
         }
         IEnumerator DownloadFile()
         {
-            var uwr = new UnityWebRequest("https://www.bruno-fache.studiofache.fr/dialogue.xml", UnityWebRequest.kHttpVerbGET);
+            uwr = new UnityWebRequest("https://www.bruno-fache.studiofache.fr/dialogue.xml", UnityWebRequest.kHttpVerbGET);
             string path = xmlPath;
             uwr.downloadHandler = new DownloadHandlerFile(path);
             yield return uwr.SendWebRequest();
@@ -116,7 +117,7 @@ namespace Game
         {
             if (state == 0)
             {
-                if (System.IO.File.Exists(xmlPath))
+                if (uwr.isDone&&System.IO.File.Exists(xmlPath))
                 {
                     state = 1;
                     //UI_CONTENT.GetComponent<AjoutMessage>().AjoutMessageRecu("Telechargement reussi");
