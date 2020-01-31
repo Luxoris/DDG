@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 namespace Game
 {
@@ -19,7 +20,7 @@ namespace Game
         public int NumReponseSelectionne;
         private bool TmpIsMessage;
         public Save save = new Save();
-        
+
         public Game(){ 
         }
 
@@ -183,7 +184,6 @@ namespace Game
             return new DialogueJoueur();
         }
 
-
         public string GetById(string id, ref CMessage cMessage, ref DialogueJoueur dialogueJoueur)
         {
             foreach (CMessage message in this.ListeMessage)
@@ -224,6 +224,14 @@ namespace Game
             }
             
         }
+
+        public void ResetSave()
+        {
+           save.actions.Clear();
+            save.SaveXml(xmlPathSave);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+    
     }
 
 
