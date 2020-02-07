@@ -10,6 +10,7 @@ public class BoutonEnvoyer : MonoBehaviour
     public void AjoutMessage()
     {
         Game_Manager.GetComponent<Game.Game>().Next(Game_Manager.GetComponent<Game.Game>().NumReponseSelectionne);
+        Game_Manager.GetComponent<Game.Game>().NumReponseSelectionne = -1;
     }
 
     // Start is called before the first frame update
