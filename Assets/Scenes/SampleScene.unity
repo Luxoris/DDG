@@ -232,7 +232,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -4, y: -4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &17300701
 MonoBehaviour:
@@ -256,7 +256,7 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 7de7eb8ade105d2478698342b86632c0, type: 3}
     m_FontSize: 9
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 7
     m_MaxSize: 40
     m_Alignment: 4
@@ -265,9 +265,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Send
-
-'
+  m_Text: Send
 --- !u!222 &17300702
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -800,8 +798,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 16.71, y: 0}
+  m_AnchoredPosition: {x: 20, y: 0}
+  m_SizeDelta: {x: 13.71, y: 0}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &599182612
 MonoBehaviour:
@@ -846,7 +844,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2089498075}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.97719496
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1420,8 +1418,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0.91915905}
-  m_AnchoredPosition: {x: 0, y: 6}
-  m_SizeDelta: {x: 0, y: -12}
+  m_AnchoredPosition: {x: 0, y: 12}
+  m_SizeDelta: {x: 0, y: -24}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &841117835
 MonoBehaviour:
@@ -1437,7 +1435,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Content: {fileID: 2005548719}
   m_Horizontal: 0
-  m_Vertical: 0
+  m_Vertical: 1
   m_MovementType: 1
   m_Elasticity: 0.1
   m_Inertia: 1
@@ -1449,7 +1447,7 @@ MonoBehaviour:
   m_HorizontalScrollbarVisibility: 2
   m_VerticalScrollbarVisibility: 2
   m_HorizontalScrollbarSpacing: -3
-  m_VerticalScrollbarSpacing: -3
+  m_VerticalScrollbarSpacing: -12
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1526,8 +1524,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 90, y: -192}
-  m_SizeDelta: {x: 50, y: 12}
+  m_AnchoredPosition: {x: 90, y: -186}
+  m_SizeDelta: {x: 50, y: 24}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &916480059
 MonoBehaviour:
@@ -1730,8 +1728,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 68.57}
-  m_SizeDelta: {x: 230, y: 112.86}
+  m_AnchoredPosition: {x: 0, y: 80}
+  m_SizeDelta: {x: 230, y: 112}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &943785002
 MonoBehaviour:
@@ -2733,8 +2731,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   points: 0
-  xmlPath: 
-  xmlPathSave: 
   UI_CHOIX_CANEVAS: {fileID: 943784997}
   UI_CONTENT: {fileID: 2005548718}
   NumReponseSelectionne: 0
@@ -3232,7 +3228,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 19.99999}
+  m_AnchoredPosition: {x: 0, y: 0.032437876}
   m_SizeDelta: {x: 0, y: 20}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2005548720
@@ -3253,7 +3249,6 @@ MonoBehaviour:
     type: 3}
   UI_ScrollBarVertical: {fileID: 599182610}
   UI_Content: {fileID: 2005548718}
-  Pos_y: -30
 --- !u!1 &2071385468
 GameObject:
   m_ObjectHideFlags: 0
@@ -3649,7 +3644,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Emeline
+  m_Text: 'Alice
+
+'
 --- !u!222 &2107598520
 CanvasRenderer:
   m_ObjectHideFlags: 0
