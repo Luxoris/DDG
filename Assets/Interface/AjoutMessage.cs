@@ -39,7 +39,7 @@ public class AjoutMessage : MonoBehaviour
 
   
         //augmente la taille du content
-        this.AgrandirContent(this.Tmp_Pos_y + ((height + 8) / 2) + offset_y);
+        this.AgrandirContent(((height + 8)));
 
         //incrémentation de la taille pos Y de l'instance
 
@@ -76,7 +76,7 @@ public class AjoutMessage : MonoBehaviour
         
 
         //augmente la taille du content
-        this.AgrandirContent(this.Tmp_Pos_y + ((height + 8) / 2) + offset_y);
+        this.AgrandirContent(((height + 8)));
 
         //incrémentation de la taille pos Y de l'instance
         this.Pos_y += this.Tmp_Pos_y + ((height + 8 ) / 2) + offset_y;
