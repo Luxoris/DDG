@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using UnityEngine.SceneManagement;
-using UnityEngine.Networking;
 
 namespace Game
 {
@@ -21,21 +19,8 @@ namespace Game
         public int NumReponseSelectionne;
         private bool TmpIsMessage;
         public Save save = new Save();
-        private int state;
-        private UnityWebRequest uwr;
-
+        
         public Game(){ 
-        }
-        IEnumerator DownloadFile()
-        {
-            uwr = new UnityWebRequest("https://www.bruno-fache.studiofache.fr/dialogue.xml", UnityWebRequest.kHttpVerbGET);
-            string path = xmlPath;
-            uwr.downloadHandler = new DownloadHandlerFile(path);
-            yield return uwr.SendWebRequest();
-            if (uwr.isNetworkError || uwr.isHttpError)
-                Debug.LogError(uwr.error);
-            else
-                Debug.Log("File successfully downloaded and saved to " + path);
         }
 
         public void ChargementXml()
@@ -49,16 +34,10 @@ namespace Game
 
         public void ChargementSauvegarde()
         {
-            if (!System.IO.File.Exists(xmlPathSave))
-            {
-                save.SaveXml(xmlPathSave);
-
-            }
             //chargement de la sauvegarde
             save = save.LoadXml(xmlPathSave);
             int i = 0;
-            while (i < save.actions.Count)
-            {
+            while(i < save.actions.Count){
                 //gestion d'erreur si le message pointe vers lui-même :
                 if (TmpMessage.Id == TmpMessage.Next)
                 {
@@ -80,7 +59,7 @@ namespace Game
                 }
                 else
                 {
-                    Next = TmpDialogueJoueur.Reponses[save.actions[i - 1]].Next;
+                    Next = TmpDialogueJoueur.Reponses[save.actions[i-1]].Next;
 
                 }
                 string TmpType = GetById(Next, ref TmpMessage, ref TmpDialogueJoueur);
@@ -99,60 +78,37 @@ namespace Game
                 }
             }
             this.Next(0);
-
+            
         }
 
         public void Start()
         {
-
-            xmlPath = Application.persistentDataPath + "/dialogue.xml";
-            xmlPathSave = Application.persistentDataPath + "/save.xml";
-
-            //UI_CONTENT.GetComponent<AjoutMessage>().AjoutMessageRecu("Début du téléchargement");
-            ////
-            StartCoroutine(DownloadFile());
-        }
-
-        private void Update()
-        {
-            if (state == 0)
+            string TmpType = "";
+            xmlPath = Path.Combine(Application.dataPath, "Ressources/XML/dialogue.xml");
+            xmlPathSave = Path.Combine(Application.dataPath, "Ressources/XML/save.xml");
+            Debug.Log("Chargement XML");
+            ChargementXml();
+            Debug.Log("Initialisation du premier message.");
+            TmpType = GetById("1", ref TmpMessage, ref TmpDialogueJoueur);
+            if (TmpType=="")
             {
-                if (uwr.isDone&&System.IO.File.Exists(xmlPath))
-                {
-                    state = 1;
-                    //UI_CONTENT.GetComponent<AjoutMessage>().AjoutMessageRecu("Telechargement reussi");
-                }
-
+                Debug.Log("L'Id ne correspond à aucun message.");
             }
-            if (state == 1)
+            if (TmpType == "CMessage")
             {
-                ////
-                string TmpType = "";
-                Debug.Log("Chargement XML");
-                ChargementXml();
-                Debug.Log("Initialisation du premier message.");
-                TmpType = GetById("1", ref TmpMessage, ref TmpDialogueJoueur);
-                if (TmpType == "")
-                {
-                    Debug.Log("L'Id ne correspond à aucun message.");
-                }
-                if (TmpType == "CMessage")
-                {
-                    TmpIsMessage = true;
-                    UI_CONTENT.GetComponent<AjoutMessage>().AjoutMessageRecu(TmpMessage.Message, 30f);
-
-                    //this.Next(0);
-                }
-                if (TmpType == "DialogueJoueur")
-                {
-                    TmpIsMessage = false;
-                    ajoutTextBoutonChoix();
-                }
-                //Debug.Log("Le message actuel est un Message ? "+TmpIsMessage);
-
-                ChargementSauvegarde();
-                state = 2;
+                TmpIsMessage = true;
+                UI_CONTENT.GetComponent<AjoutMessage>().AjoutMessageRecu(TmpMessage.Message,30f);
+                
+                //this.Next(0);
             }
+            if (TmpType == "DialogueJoueur")
+            {
+                TmpIsMessage = false;
+                ajoutTextBoutonChoix();
+            }
+            //Debug.Log("Le message actuel est un Message ? "+TmpIsMessage);
+
+            ChargementSauvegarde();
 
         }
 
@@ -227,6 +183,7 @@ namespace Game
             return new DialogueJoueur();
         }
 
+
         public string GetById(string id, ref CMessage cMessage, ref DialogueJoueur dialogueJoueur)
         {
             foreach (CMessage message in this.ListeMessage)
@@ -267,14 +224,6 @@ namespace Game
             }
             
         }
-
-        public void ResetSave()
-        {
-           save.actions.Clear();
-            save.SaveXml(xmlPathSave);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
-    
     }
 
 
