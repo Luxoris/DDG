@@ -10,7 +10,9 @@ public class AjoutMessage : MonoBehaviour
     public GameObject UI_ScrollBarVertical;
     public GameObject UI_Content;
 
-    public float Pos_y;
+    private float Pos_y;
+    private float Tmp_Pos_y;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,17 +32,19 @@ public class AjoutMessage : MonoBehaviour
         
         //augmentation de la taille du message en fonction de la taille du text.
         height = LayoutUtility.GetPreferredHeight(newMessage.transform.GetChild(0).GetComponent<RectTransform>());
-        height += 8;
+        height += 16;
         
 
         newMessage.GetComponent<RectTransform>().sizeDelta = new Vector2(newMessage.GetComponent<RectTransform>().sizeDelta.x, height);
 
   
         //augmente la taille du content
-        this.AgrandirContent(height + 8);
+        this.AgrandirContent(((height + 8)));
 
         //incrémentation de la taille pos Y de l'instance
-        this.Pos_y += height + 8 + offset_y;
+
+        this.Pos_y += this.Tmp_Pos_y + ((height + 8) / 2) + offset_y;
+        this.Tmp_Pos_y = ((height + 8) / 2);
 
         //modifie position message
         newMessage.GetComponent<RectTransform>().anchoredPosition = new Vector3(posX, this.Pos_y, 0);
@@ -66,16 +70,17 @@ public class AjoutMessage : MonoBehaviour
 
         //augmentation de la taille du message en fonction de la taille du text.
         height = LayoutUtility.GetPreferredHeight(newMessage.transform.GetChild(0).GetComponent<RectTransform>());
-        height += 8;
+        height += 16;
         newMessage.GetComponent<RectTransform>().sizeDelta = new Vector2(newMessage.GetComponent<RectTransform>().sizeDelta.x, height);
 
         
 
         //augmente la taille du content
-        this.AgrandirContent(height + 8);
+        this.AgrandirContent(((height + 8)));
 
         //incrémentation de la taille pos Y de l'instance
-        this.Pos_y += height + 8 + offset_y;
+        this.Pos_y += this.Tmp_Pos_y + ((height + 8 ) / 2) + offset_y;
+        this.Tmp_Pos_y = ((height + 8) / 2);
 
         //modifie position message
         newMessage.GetComponent<RectTransform>().anchoredPosition = new Vector3(posX, this.Pos_y, 0);
