@@ -70,7 +70,12 @@ namespace Game
                 //Si c'est un message envoyé, ajoute le message dans l'interface
                 if (!TmpIsMessage)
                 {
+                    if (TmpDialogueJoueur.Date != "")
+                    {
+                        UI_CONTENT.GetComponent<AjoutMessage>().AjoutDate(TmpDialogueJoueur.Date);
+                    }
                     UI_CONTENT.GetComponent<AjoutMessage>().AjoutMessageEnvoye(TmpDialogueJoueur.Reponses[save.actions[i]].TxtReponse);
+                    
                     i++;
                 }
 
@@ -89,7 +94,12 @@ namespace Game
                 if (TmpType == "CMessage")
                 {
                     TmpIsMessage = true;
+                    if (TmpMessage.Date != "")
+                    {
+                        UI_CONTENT.GetComponent<AjoutMessage>().AjoutDate(TmpMessage.Date);
+                    }
                     UI_CONTENT.GetComponent<AjoutMessage>().AjoutMessageRecu(TmpMessage.Message);
+                    
                 }
                 if (TmpType == "DialogueJoueur")
                 {
@@ -149,7 +159,12 @@ namespace Game
                 if (TmpType == "CMessage")
                 {
                     TmpIsMessage = true;
+                    if (TmpMessage.Date != "")
+                    {
+                        UI_CONTENT.GetComponent<AjoutMessage>().AjoutDate(TmpMessage.Date);
+                    }
                     UI_CONTENT.GetComponent<AjoutMessage>().AjoutMessageRecu(TmpMessage.Message, 20f);
+                    
 
                     //this.Next(0);
                 }
@@ -159,7 +174,6 @@ namespace Game
                     ajoutTextBoutonChoix();
                 }
                 //Debug.Log("Le message actuel est un Message ? "+TmpIsMessage);
-
                 ChargementSauvegarde();
                 state = 2;
             }
@@ -180,7 +194,12 @@ namespace Game
                 //Si c'est un message envoyé, ajoute le message dans l'interface
                 if (!TmpIsMessage)
                 {
+                    if (TmpDialogueJoueur.Date != "")
+                    {
+                        UI_CONTENT.GetComponent<AjoutMessage>().AjoutDate(TmpDialogueJoueur.Date);
+                    }
                     UI_CONTENT.GetComponent<AjoutMessage>().AjoutMessageEnvoye(TmpDialogueJoueur.Reponses[NumBouton].TxtReponse);
+                    
                     save.addSaveAction(NumBouton, xmlPathSave);
                 }
 
@@ -199,7 +218,12 @@ namespace Game
                 if (TmpType == "CMessage")
                 {
                     TmpIsMessage = true;
+                    if (TmpMessage.Date != "")
+                    {
+                        UI_CONTENT.GetComponent<AjoutMessage>().AjoutDate(TmpMessage.Date);
+                    }
                     UI_CONTENT.GetComponent<AjoutMessage>().AjoutMessageRecu(TmpMessage.Message);
+                    
                     this.Next(0);
                 }
                 if (TmpType == "DialogueJoueur")
@@ -224,7 +248,7 @@ namespace Game
                 }
             }
             Debug.LogError("L'id n'existe pas dans la liste des messages d'émeline");
-            return new CMessage("-1", "L'id " + id + " n'existe pas dans la liste des messages d'émeline.", "-1");
+            return new CMessage("-1","" ,"L'id " + id + " n'existe pas dans la liste des messages d'émeline.", "-1");
         }
 
         public DialogueJoueur GetDialogueById(string id)
