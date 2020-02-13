@@ -28,7 +28,7 @@ public class AjoutMessage : MonoBehaviour
         GameObject newMessage = Instantiate(UI_MessageEnvoye, monVecteur, Quaternion.identity, UI_Content.transform);
         RectTransform t = newMessage.GetComponent<RectTransform>();
         float posX = ((-t.offsetMin.x + t.offsetMax.x) * 0.5f);
-        newMessage.GetComponentInChildren<Text>().text = Message;
+        newMessage.GetComponentInChildren<Text>().text = Message.Replace("\n", "").Replace(((char)9).ToString(), "");
         
         //augmentation de la taille du message en fonction de la taille du text.
         height = LayoutUtility.GetPreferredHeight(newMessage.transform.GetChild(0).GetComponent<RectTransform>());
@@ -65,7 +65,7 @@ public class AjoutMessage : MonoBehaviour
         RectTransform t = newMessage.GetComponent<RectTransform>();
         float posX = ((+t.offsetMin.x - t.offsetMax.x) * 0.5f);
 
-        newMessage.GetComponentInChildren<Text>().text = Message;
+        newMessage.GetComponentInChildren<Text>().text = Message.Replace("\n", "").Replace(((char)9).ToString(), "");
 
 
         //augmentation de la taille du message en fonction de la taille du text.
