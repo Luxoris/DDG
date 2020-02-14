@@ -76,10 +76,10 @@ namespace Game
                 }
             }
 
-            /*foreach(Jour jour in ListeJours)
+            foreach(Jour jour in ListeJours)
             {
                 Debug.Log(jour.ToString());
-            }*/
+            }
         }
 
         public void ChargementSauvegarde()

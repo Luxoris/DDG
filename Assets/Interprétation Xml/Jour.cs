@@ -38,7 +38,7 @@ public class Jour
         Next mem = new Next(0,"");
         foreach(Next next in Nexts)
         {
-            if (next.nMin >= score)
+            if (score >= next.nMin)
             {
                 mem = next;
             }
