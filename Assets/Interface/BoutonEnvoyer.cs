@@ -9,7 +9,9 @@ public class BoutonEnvoyer : MonoBehaviour
     //fonction ajout message
     public void AjoutMessage()
     {
-        Game_Manager.GetComponent<Game.Game>().Next(Game_Manager.GetComponent<Game.Game>().NumReponseSelectionne);
+        Game_Manager.GetComponent<Game.Game>().UI_CHOIX_CANEVAS.GetComponent<CreateButton>().destructionBoutonChoix();
+        StartCoroutine(Game_Manager.GetComponent<Game.Game>().NextWithDelay(0f, Game_Manager.GetComponent<Game.Game>().NumReponseSelectionne));
+        //Game_Manager.GetComponent<Game.Game>().Next(Game_Manager.GetComponent<Game.Game>().NumReponseSelectionne);
         Game_Manager.GetComponent<Game.Game>().NumReponseSelectionne = -1;
     }
 

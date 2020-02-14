@@ -25,7 +25,7 @@ namespace Game
         private int state = 0;
         private UnityWebRequest uwr;
 
-        private int nbGetById = 0;
+        public float vitesseMessage = 0.025f;
 
         public Game()
         {
@@ -84,6 +84,7 @@ namespace Game
 
         public void ChargementSauvegarde()
         {
+
             if (!System.IO.File.Exists(xmlPathSave))
             {
                 save.SaveXml(xmlPathSave);
@@ -91,8 +92,45 @@ namespace Game
             }
             //chargement de la sauvegarde
             save = save.LoadXml(xmlPathSave);
+            StartCoroutine(DelayChargementMessagesSauvegardees(1f));
+            
+        }
+
+        public IEnumerator DelayChargementMessagesSauvegardees(float time)
+        {
+            //print(Time.time);
+            yield return new WaitForSeconds(time);
+            this.chargementMessagesSauvegardees();
+        }
+        public void chargementMessagesSauvegardees()
+        {
+            string TmpType = "";
+            Debug.Log("Initialisation du premier message.");
+            TmpType = GetById("1", ref TmpMessage, ref TmpDialogueJoueur);
+            if (TmpType == "")
+            {
+                Debug.Log("L'Id ne correspond à aucun message.");
+            }
+            if (TmpType == "CMessage")
+            {
+                TmpIsMessage = true;
+                if (TmpMessage.Date != "")
+                {
+                    UI_CONTENT.GetComponent<AjoutMessage>().AjoutDate(TmpMessage.Date);
+                }
+                UI_CONTENT.GetComponent<AjoutMessage>().AjoutMessageRecu(TmpMessage.Message, 20f);
+
+
+                //this.Next(0);
+            }
+            if (TmpType == "DialogueJoueur")
+            {
+                TmpIsMessage = false;
+                ajoutTextBoutonChoix();
+            }
+
             int i = 0;
-            while (i < save.actions.Count)
+            while (i < (save.actions.Count - 1))
             {
                 //gestion d'erreur si le message pointe vers lui-même :
                 if (TmpMessage.Id == TmpMessage.Next)
@@ -108,7 +146,7 @@ namespace Game
                         UI_CONTENT.GetComponent<AjoutMessage>().AjoutDate(TmpDialogueJoueur.Date);
                     }
                     UI_CONTENT.GetComponent<AjoutMessage>().AjoutMessageEnvoye(TmpDialogueJoueur.Reponses[save.actions[i]].TxtReponse);
-                    
+
                     i++;
                 }
 
@@ -123,7 +161,7 @@ namespace Game
                     Next = TmpDialogueJoueur.Reponses[save.actions[i - 1]].Next;
 
                 }
-                string TmpType = GetById(Next, ref TmpMessage, ref TmpDialogueJoueur);
+                TmpType = GetById(Next, ref TmpMessage, ref TmpDialogueJoueur);
                 if (TmpType == "CMessage")
                 {
                     TmpIsMessage = true;
@@ -132,7 +170,7 @@ namespace Game
                         UI_CONTENT.GetComponent<AjoutMessage>().AjoutDate(TmpMessage.Date);
                     }
                     UI_CONTENT.GetComponent<AjoutMessage>().AjoutMessageRecu(TmpMessage.Message);
-                    
+
                 }
                 if (TmpType == "DialogueJoueur")
                 {
@@ -180,32 +218,9 @@ namespace Game
             if (state == 1)
             {
                 ////
-                string TmpType = "";
+                
                 Debug.Log("Chargement XML");
                 ChargementXml();
-                Debug.Log("Initialisation du premier message.");
-                TmpType = GetById("1", ref TmpMessage, ref TmpDialogueJoueur);
-                if (TmpType == "")
-                {
-                    Debug.Log("L'Id ne correspond à aucun message.");
-                }
-                if (TmpType == "CMessage")
-                {
-                    TmpIsMessage = true;
-                    if (TmpMessage.Date != "")
-                    {
-                        UI_CONTENT.GetComponent<AjoutMessage>().AjoutDate(TmpMessage.Date);
-                    }
-                    UI_CONTENT.GetComponent<AjoutMessage>().AjoutMessageRecu(TmpMessage.Message, 20f);
-                    
-
-                    //this.Next(0);
-                }
-                if (TmpType == "DialogueJoueur")
-                {
-                    TmpIsMessage = false;
-                    ajoutTextBoutonChoix();
-                }
                 //Debug.Log("Le message actuel est un Message ? "+TmpIsMessage);
                 ChargementSauvegarde();
                 state = 2;
@@ -213,8 +228,50 @@ namespace Game
 
         }
 
+        public IEnumerator NextWithDelay(float time, int numBouton=0)
+        {
+            //print(Time.time);
+            yield return new WaitForSeconds(time);
+            this.Next(numBouton);
+        }
+
+        public IEnumerator NextAjoutMessage(float time, int numBouton, string Next)
+        {
+            //print(Time.time);
+            yield return new WaitForSeconds(time);
+            this.AjoutMessages(numBouton, Next);
+        }
+
+        public void AjoutMessages(int NumBouton, string Next)
+        {
+            float time = 1f;
+            string TmpType = GetById(Next, ref TmpMessage, ref TmpDialogueJoueur);
+            if (TmpType == "CMessage")
+            {
+                TmpIsMessage = true;
+                if (TmpMessage.Date != "")
+                {
+                    UI_CONTENT.GetComponent<AjoutMessage>().AjoutDate(TmpMessage.Date);
+                }
+                UI_CONTENT.GetComponent<AjoutMessage>().AjoutMessageRecu(TmpMessage.Message);
+                time = TmpMessage.Message.Length * vitesseMessage + 0.2f;
+                StartCoroutine(NextWithDelay(time));
+                //this.Next(0);
+            }
+            if (TmpType == "DialogueJoueur")
+            {
+                TmpIsMessage = false;
+                ajoutTextBoutonChoix();
+            }
+            if (TmpType == "")
+            {
+                Debug.LogWarning("La référence du next " + Next + " n'existe pas !");
+            }
+        }
+    
         public void Next(int NumBouton)
         {
+            float time = vitesseMessage;
             if (NumBouton != -1)
             {
                 //Debug.Log("Affichage du prochain message.");
@@ -236,6 +293,9 @@ namespace Game
                     Debug.Log(this.points);
 
                     save.addSaveAction(NumBouton, xmlPathSave);
+
+                    //gestion timer
+                    time = TmpDialogueJoueur.Reponses[NumBouton].TxtReponse.Length * vitesseMessage + 0.5f;
                 }
 
                 //appel le prochain message suivant si il est envoyé ou reçu
@@ -249,27 +309,7 @@ namespace Game
                     Next = TmpDialogueJoueur.Reponses[NumBouton].Next;
 
                 }
-                string TmpType = GetById(Next, ref TmpMessage, ref TmpDialogueJoueur);
-                if (TmpType == "CMessage")
-                {
-                    TmpIsMessage = true;
-                    if (TmpMessage.Date != "")
-                    {
-                        UI_CONTENT.GetComponent<AjoutMessage>().AjoutDate(TmpMessage.Date);
-                    }
-                    UI_CONTENT.GetComponent<AjoutMessage>().AjoutMessageRecu(TmpMessage.Message);
-                    
-                    this.Next(0);
-                }
-                if (TmpType == "DialogueJoueur")
-                {
-                    TmpIsMessage = false;
-                    ajoutTextBoutonChoix();
-                }
-                if (TmpType == "")
-                {
-                    Debug.LogWarning("La référence du next " + Next + " n'existe pas !");
-                }
+                StartCoroutine(NextAjoutMessage(time, NumBouton, Next));
             }
         }
 
@@ -307,7 +347,6 @@ namespace Game
             {
                 if (message.Id == id)
                 {
-                    nbGetById = 0;
                     cMessage = message;
                     return "CMessage";
                 }
@@ -318,7 +357,6 @@ namespace Game
                 if (dial.Id == id)
                 {
                     dialogueJoueur = dial;
-                    nbGetById = 0;
                     return "DialogueJoueur";
                 }
                 
@@ -327,7 +365,6 @@ namespace Game
             {
                 if(j.Id == id)
                 {
-                    nbGetById = 0;
                     return GetById(j.getBranchID(points), ref cMessage, ref dialogueJoueur);
                 }
             }
@@ -389,6 +426,11 @@ namespace Game
             save.actions.Clear();
             save.SaveXml(xmlPathSave);
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
+        public void setVitesseMessage()
+        {
+
         }
     }
 }

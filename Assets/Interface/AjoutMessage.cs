@@ -18,6 +18,8 @@ public class AjoutMessage : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Pos_y = 0;
+        Tmp_Pos_y = 0;
         UI_Content.GetComponent<RectTransform>().anchoredPosition = new Vector3(UI_Content.GetComponent<RectTransform>().anchoredPosition.x, 0f);
     }
 
