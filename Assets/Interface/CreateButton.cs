@@ -108,8 +108,8 @@ public class CreateButton : MonoBehaviour
             Destroy(bouton);
         }
         listeBouton.Clear();
-        UI_choix_canvas.GetComponent<RectTransform>().offsetMax = new Vector2(UI_choix_canvas.GetComponent<RectTransform>().offsetMax.x, (30));
-        UI_ScrollViewMessage.GetComponent<RectTransform>().offsetMin = new Vector2(UI_ScrollViewMessage.GetComponent<RectTransform>().offsetMin.x, (30));
+        UI_choix_canvas.GetComponent<RectTransform>().offsetMax = new Vector2(UI_choix_canvas.GetComponent<RectTransform>().offsetMax.x, (40));
+        UI_ScrollViewMessage.GetComponent<RectTransform>().offsetMin = new Vector2(UI_ScrollViewMessage.GetComponent<RectTransform>().offsetMin.x, (40));
 
     }
 }
