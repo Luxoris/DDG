@@ -18,8 +18,7 @@ public class UI_choix : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //this.GetComponent<Text>().text = this.Text;
-        this.GetComponentInChildren<Text>().text = this.Text;
+        this.Text = this.GetComponentInChildren<Text>().text;
     }
 
     // Update is called once per frame

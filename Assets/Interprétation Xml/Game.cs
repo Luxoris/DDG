@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Game
 {
@@ -17,6 +18,7 @@ namespace Game
         private string xmlPathSave;
         public GameObject UI_CHOIX_CANEVAS;
         public GameObject UI_CONTENT;
+        public Slider UI_SliderSpeed;
         public CMessage TmpMessage;
         public DialogueJoueur TmpDialogueJoueur;
         public int NumReponseSelectionne =-1;
@@ -190,6 +192,7 @@ namespace Game
             xmlPath = Application.persistentDataPath + "/dialogue.xml";
             xmlPathSave = Application.persistentDataPath + "/save.xml";
             NumReponseSelectionne = -1;
+            UI_SliderSpeed.value = vitesseMessage * 200;
 
             //UI_CONTENT.GetComponent<AjoutMessage>().AjoutMessageRecu("Début du téléchargement");
             ////
@@ -254,7 +257,7 @@ namespace Game
                     UI_CONTENT.GetComponent<AjoutMessage>().AjoutDate(TmpMessage.Date);
                 }
                 UI_CONTENT.GetComponent<AjoutMessage>().AjoutMessageRecu(TmpMessage.Message);
-                time = TmpMessage.Message.Length * vitesseMessage + 0.2f;
+                time = TmpMessage.Message.Length * vitesseMessage + (0.1f * 200 * vitesseMessage);
                 StartCoroutine(NextWithDelay(time));
                 //this.Next(0);
             }
@@ -295,7 +298,7 @@ namespace Game
                     save.addSaveAction(NumBouton, xmlPathSave);
 
                     //gestion timer
-                    time = TmpDialogueJoueur.Reponses[NumBouton].TxtReponse.Length * vitesseMessage + 0.5f;
+                    time = TmpDialogueJoueur.Reponses[NumBouton].TxtReponse.Length * vitesseMessage + (0.1f * 200 * vitesseMessage);
                 }
 
                 //appel le prochain message suivant si il est envoyé ou reçu
@@ -404,10 +407,10 @@ namespace Game
         {
             CreateButton butContainer = UI_CHOIX_CANEVAS.GetComponent<CreateButton>();
             butContainer.destructionBoutonChoix();
-            butContainer.creationBoutonChoix(TmpDialogueJoueur.Reponses.Count);
-            int i = 0;
+            butContainer.creationBoutonChoix(TmpDialogueJoueur.Reponses.Count, TmpDialogueJoueur.Reponses.ToArray());
+            //int i = 0;
             //Debug.Log("NB reponses = " + TmpDialogueJoueur.Reponses.Count);
-            if (TmpDialogueJoueur.Reponses.Count > 0)
+            /*if (TmpDialogueJoueur.Reponses.Count > 0)
             {
                 i = 0;
                 foreach (GameObject bouton in butContainer.GetComponent<CreateButton>().listeBouton)
@@ -416,7 +419,7 @@ namespace Game
                     bouton.GetComponent<UI_choix>().Text = TmpDialogueJoueur.Reponses[i].TxtReponse;
                     i++;
                 }
-            }
+            }*/
 
         }
 
@@ -430,7 +433,7 @@ namespace Game
 
         public void setVitesseMessage()
         {
-
+            vitesseMessage = UI_SliderSpeed.value * 0.005f;
         }
     }
 }
