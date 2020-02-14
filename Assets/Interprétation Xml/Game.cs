@@ -11,7 +11,8 @@ namespace Game
     {
         public List<DialogueJoueur> ListeDialogueJoueurs = new List<DialogueJoueur>();
         public List<CMessage> ListeMessage = new List<CMessage>();
-        public int points;
+        public List<Jour> ListeJours = new List<Jour>();
+        public int points =0;
         private string xmlPath;
         private string xmlPathSave;
         public GameObject UI_CHOIX_CANEVAS;
@@ -23,6 +24,8 @@ namespace Game
         public Save save = new Save();
         private int state = 0;
         private UnityWebRequest uwr;
+
+        private int nbGetById = 0;
 
         public Game()
         {
@@ -47,6 +50,36 @@ namespace Game
             //xml.Save(xmlPathSave);
             ListeMessage = xml.Messages;
             ListeDialogueJoueurs = xml.ListeDialogueJoueurs;
+            ListeJours = xml.ListeJours;
+
+            foreach(CMessage m in ListeMessage)
+            {
+                m.Next = m.Next.Replace(" ", "");
+                m.Id = m.Id.Replace(" ", "");
+            }
+
+            foreach(DialogueJoueur d in ListeDialogueJoueurs)
+            {
+                d.Id = d.Id.Replace(" ", "");
+                foreach(Reponse r in d.Reponses)
+                {
+                   r.Next = r.Next.Replace(" ", "");
+                }
+            }
+
+            foreach (Jour j in ListeJours)
+            {
+                j.Id = j.Id.Replace(" ", "");
+                foreach (Next n in j.Nexts)
+                {
+                    n.next = n.next.Replace(" ", "");
+                }
+            }
+
+            /*foreach(Jour jour in ListeJours)
+            {
+                Debug.Log(jour.ToString());
+            }*/
         }
 
         public void ChargementSauvegarde()
@@ -199,7 +232,9 @@ namespace Game
                         UI_CONTENT.GetComponent<AjoutMessage>().AjoutDate(TmpDialogueJoueur.Date);
                     }
                     UI_CONTENT.GetComponent<AjoutMessage>().AjoutMessageEnvoye(TmpDialogueJoueur.Reponses[NumBouton].TxtReponse);
-                    
+                    this.points += TmpDialogueJoueur.Reponses[NumBouton].ValueChange;
+                    Debug.Log(this.points);
+
                     save.addSaveAction(NumBouton, xmlPathSave);
                 }
 
@@ -240,6 +275,7 @@ namespace Game
 
         public CMessage GetCMessageById(string id)
         {
+            
             foreach (CMessage message in this.ListeMessage)
             {
                 if (message.Id == id)
@@ -271,18 +307,59 @@ namespace Game
             {
                 if (message.Id == id)
                 {
+                    nbGetById = 0;
                     cMessage = message;
                     return "CMessage";
                 }
+                
             }
             foreach (DialogueJoueur dial in this.ListeDialogueJoueurs)
             {
                 if (dial.Id == id)
                 {
                     dialogueJoueur = dial;
+                    nbGetById = 0;
                     return "DialogueJoueur";
                 }
+                
             }
+            foreach (Jour j in this.ListeJours)
+            {
+                if(j.Id == id)
+                {
+                    nbGetById = 0;
+                    return GetById(j.getBranchID(points), ref cMessage, ref dialogueJoueur);
+                }
+            }
+
+            /*if (nbGetById < 2)
+            {
+
+                string[] tmpId2tab = id.Split('-');
+                string tmpId2 = id;
+                if (tmpId2tab.Length == 2)
+                {
+                    tmpId2 = tmpId2tab[0] + (int.Parse(tmpId2tab[1]) + 1).ToString();
+                    tmpId2 = GetById(tmpId2, ref cMessage, ref dialogueJoueur);
+                }
+                if (tmpId2 != "")
+                {
+                    nbGetById = 0;
+                    return tmpId2;
+                }
+                else
+                {
+                    string tmpId = id.Substring(0, 2);
+                    tmpId = id[0] + (int.Parse(id[1].ToString()) + 1).ToString();
+                    tmpId = GetById(tmpId, ref cMessage, ref dialogueJoueur);
+                    if (tmpId != "")
+                    {
+                        nbGetById = 0;
+                        return tmpId;
+                    }
+                    nbGetById++;
+                }
+            }*/
             return "";
         }
 
