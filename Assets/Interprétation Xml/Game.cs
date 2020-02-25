@@ -222,7 +222,7 @@ namespace Game
 
         private void Update()
         {
-            Debug.Log(state);
+            //Debug.Log(state);
             if (state == -2)
             {
                 if(Application.internetReachability == NetworkReachability.NotReachable)
@@ -441,7 +441,12 @@ namespace Game
             }
             foreach (Jour j in this.ListeJours)
             {
-                if(j.Id == id)
+                if (id == "fin")
+                {
+                    console.text = "Fin du jeu";
+                    GameObject.Find("UI_Bouton_Send").GetComponent<Button>().enabled = false;
+                }
+                if (j.Id == id)
                 {
                     return GetById(j.getBranchID(points), ref cMessage, ref dialogueJoueur);
                 }
@@ -475,10 +480,6 @@ namespace Game
                     nbGetById++;
                 }
             }*/
-            if (id == "fin")
-            {
-                console.text = "Fin du jeu";
-            }
             return "";
         }
 
@@ -504,7 +505,7 @@ namespace Game
 
         public void ResetSave()
         {
-            System.IO.File.Delete(xmlPath);
+            //System.IO.File.Delete(xmlPath);
             save.actions.Clear();
             save.SaveXml(xmlPathSave);
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
