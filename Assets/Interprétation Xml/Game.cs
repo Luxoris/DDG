@@ -21,6 +21,7 @@ namespace Game
         public Slider UI_SliderSpeed;
         public CMessage TmpMessage;
         public DialogueJoueur TmpDialogueJoueur;
+        public Text console;
         public int NumReponseSelectionne =-1;
         private bool TmpIsMessage;
         public Save save = new Save();
@@ -31,6 +32,14 @@ namespace Game
 
         public Game()
         {
+        }
+        private void Awake()
+        {
+            //Set screen size for Standalone
+        #if UNITY_STANDALONE
+            Screen.SetResolution(540, 960, false);
+            Screen.fullScreen = false;
+        #endif
         }
 
         IEnumerator DownloadFile()
@@ -143,6 +152,8 @@ namespace Game
                 //Si c'est un message envoyé, ajoute le message dans l'interface
                 if (!TmpIsMessage)
                 {
+                    this.points += TmpDialogueJoueur.Reponses[save.actions[i]].ValueChange;
+                    Debug.Log(this.points);
                     if (TmpDialogueJoueur.Date != "")
                     {
                         UI_CONTENT.GetComponent<AjoutMessage>().AjoutDate(TmpDialogueJoueur.Date);
@@ -198,36 +209,73 @@ namespace Game
             ////
             if (!System.IO.File.Exists(xmlPath))
             {
-                StartCoroutine(DownloadFile());
+                state = -2;
+                //StartCoroutine(DownloadFile());
             }
             else
             {
                 state = 1;
+                state = -3;///////////////à supprimer plus tard
             }
             
         }
 
         private void Update()
         {
-            if (state == 0)
+            Debug.Log(state);
+            if (state == -2)
+            {
+                if(Application.internetReachability == NetworkReachability.NotReachable)
+                {
+                    console.text = "Connection internet nécessaire au premier lancement, veuillez vous connecter pour finaliser l'installation. !";
+                    Debug.Log("Connection internet nécessaire au premier lancement, veuillez vous connecter pour finaliser l'installation. !");
+                }
+                else
+                {
+                    console.text = "Téléchargement du fichier..";
+                    Debug.Log("Téléchargement du fichier..");
+                    StartCoroutine(DownloadFile());
+                    state = 0;
+                }
+                
+            }else if (state == -3)
+            {
+                if (Application.internetReachability == NetworkReachability.NotReachable)
+                {
+
+                    state = 1;
+                }
+                else
+                {
+                    console.text = "Mise à jour en cours..";
+                    Debug.Log("Mise à jour en cours..");
+                    StartCoroutine(DownloadFile());
+                    state = 0;
+                }
+
+            }else if (state == 0)
             {
                 if (uwr!=null&&uwr.isDone&&System.IO.File.Exists(xmlPath))
                 {
                     state = 1;
                     //UI_CONTENT.GetComponent<AjoutMessage>().AjoutMessageRecu("Telechargement reussi");
+                    console.text = "Installation réussie. !";
+                    Debug.Log("Installation réussie. !");
                 }
 
-            }
-            if (state == 1)
+            }else if (state == 1)
             {
                 ////
                 
                 Debug.Log("Chargement XML");
+                console.text = "";
                 ChargementXml();
                 //Debug.Log("Le message actuel est un Message ? "+TmpIsMessage);
                 ChargementSauvegarde();
                 state = 2;
             }
+
+            
 
         }
 
@@ -238,17 +286,44 @@ namespace Game
             this.Next(numBouton);
         }
 
-        public IEnumerator NextAjoutMessage(float time, int numBouton, string Next)
+        public IEnumerator NextIsDateMessage(float time, int numBouton, string Next)
         {
             //print(Time.time);
             yield return new WaitForSeconds(time);
-            this.AjoutMessages(numBouton, Next);
+            this.IsDateMessage(time, numBouton, Next);
         }
 
-        public void AjoutMessages(int NumBouton, string Next)
+        public void IsDateMessage(float time, int NumBouton, string Next)
+        {
+            string TmpType = GetById(Next, ref TmpMessage, ref TmpDialogueJoueur);
+            if (TmpType == "CMessage")
+            {
+                if (TmpMessage.Date != "")
+                {
+                    time = (1f * 200 * vitesseMessage);
+                }
+            }
+            if (TmpType == "DialogueJoueur")
+            {
+                if (TmpDialogueJoueur.Date != "")
+                {
+                    time = (1f * 200 * vitesseMessage);
+                }
+            }
+                StartCoroutine(NextAjoutMessage(time,NumBouton,Next,TmpType));
+        }
+
+
+        public IEnumerator NextAjoutMessage(float time, int numBouton, string Next, string TmpType)
+        {
+            //print(Time.time);
+            yield return new WaitForSeconds(time);
+            this.AjoutMessages(numBouton, Next, TmpType);
+        }
+
+        public void AjoutMessages(int NumBouton, string Next, string TmpType)
         {
             float time = 1f;
-            string TmpType = GetById(Next, ref TmpMessage, ref TmpDialogueJoueur);
             if (TmpType == "CMessage")
             {
                 TmpIsMessage = true;
@@ -312,7 +387,7 @@ namespace Game
                     Next = TmpDialogueJoueur.Reponses[NumBouton].Next;
 
                 }
-                StartCoroutine(NextAjoutMessage(time, NumBouton, Next));
+                StartCoroutine(NextIsDateMessage(time, NumBouton, Next));
             }
         }
 
@@ -400,6 +475,10 @@ namespace Game
                     nbGetById++;
                 }
             }*/
+            if (id == "fin")
+            {
+                console.text = "Fin du jeu";
+            }
             return "";
         }
 
