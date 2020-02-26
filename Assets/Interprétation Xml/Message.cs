@@ -10,6 +10,8 @@ using System.Xml.Serialization;
 public class CMessage
 {
     [XmlAttribute("id")] public string Id;
+    [XmlElement("date")]
+    public string Date;
     [XmlElement("message")]
     public string Message;
     [XmlElement("next")]
@@ -19,11 +21,13 @@ public class CMessage
     {
         Message = "Enter a message";
         Next = "Enter the next dialogue id";
+        Date = "";
     }
 
-    public CMessage(string id, string txtMessage, string nextId)
+    public CMessage(string id, string date, string txtMessage, string nextId)
     {
         this.Id = id;
+        this.Date = date;
         this.Next = nextId;
         this.Message = txtMessage;
     }
@@ -31,6 +35,7 @@ public class CMessage
     override public string ToString()
     {
         return "Message : {"
+            + "Date : " + this.Date
             + "Message : " + this.Message
             + "Next : " + this.Next
             + " }";

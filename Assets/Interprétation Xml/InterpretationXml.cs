@@ -19,6 +19,9 @@ namespace Game
         [XmlElement("dialogueJoueur")]
         public List<DialogueJoueur> ListeDialogueJoueurs = new List<DialogueJoueur>();
 
+        [XmlElement("jour")]
+        public List<Jour> ListeJours = new List<Jour>();
+
         public static InterpretationXml LoadXml(string path)
         {
             Debug.Log("Création du Serializer");
