@@ -1,7 +1,7 @@
 Qu'est-ce qu'il m'arrive ?
 =================
 
-[Lien vers la page du jeu :](https://www.bruno-fache.studiofache.fr/projets/quest-ce-quil-marrive?target=blank)
+[Page du jeu :](https://www.bruno-fache.studiofache.fr/projets/quest-ce-quil-marrive?target=blank)
 
 *Un Sérious Game réalisé par Lucas AULEN, Bruno FACHE et Yoann FERNANDES.*
 
