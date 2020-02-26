@@ -188,7 +188,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "R\xE9initialiser sauvegarde"
+  m_Text: "R\xE9initialiser la partie"
 --- !u!222 &2494880
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2738,7 +2738,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Voulez vous r\xE9initialiser\nvotre sauvegarde?"
+  m_Text: "Voulez vous r\xE9initialiser\nvotre partie?"
 --- !u!222 &1098772113
 CanvasRenderer:
   m_ObjectHideFlags: 0
